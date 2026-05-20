@@ -4,31 +4,46 @@ import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import drivers.BrowserStackDriver;
+import drivers.LocalDriver;
 import helpers.Attach;
 import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import pages.LanguagesScreenPage;
-import pages.SearchScreenPage;
-import pages.SettingsScreenPage;
 
 import static com.codeborne.selenide.Selenide.closeWebDriver;
 import static com.codeborne.selenide.Selenide.open;
 
 public class TestBase {
 
-    SearchScreenPage searchScreenPage = new SearchScreenPage();
-    SettingsScreenPage settingsScreenPage = new SettingsScreenPage();
-    LanguagesScreenPage languagesScreenPage = new LanguagesScreenPage();
-
-
+    public static String host = System.getProperty("host");
     @BeforeAll
     static void beforeAll() {
-        Configuration.browser = BrowserStackDriver.class.getName();
+        if (host == null) {
+            throw new IllegalStateException(
+                    "System property 'host' is not set. " +
+                            "Please run tests with: -Dhost=browserstack or -Dhost=local"
+            );
+        }
+
+        switch (host) {
+            case "browserstack":
+                Configuration.browser = BrowserStackDriver.class.getName();
+                System.out.println("Running on BrowserStack");
+                break;
+            case "local":
+                Configuration.browser = LocalDriver.class.getName();
+                System.out.println("Running on Local");
+                break;
+            default:
+                throw new IllegalStateException(
+                        "Unknown host: '" + host + "'. Use -Dhost=browserstack or -Dhost=local"
+                );
+        }
+
         Configuration.browserSize = null;
-        Configuration.timeout = 30000;
     }
+
 
     @BeforeEach
     void beforeEach() {
@@ -37,14 +52,18 @@ public class TestBase {
     }
 
     @AfterEach
-    void addAttachments() {
-        String sessionId = Selenide.sessionId().toString();
-        System.out.println(sessionId);
+    void tearDown() {
+        switch (host) {
+            case "browserstack":
+                String sessionId = Selenide.sessionId().toString();
 
-//        Attach.screenshotAs("Last screenshot"); // todo fix
-        Attach.pageSource();
+                Attach.pageSource();
+                Attach.addVideo(sessionId);
+                break;
+            case "local":
+                Attach.screenshotAs("Last screenshot");
+                Attach.pageSource();
+        }
         closeWebDriver();
-
-        Attach.addVideo(sessionId);
     }
 }
