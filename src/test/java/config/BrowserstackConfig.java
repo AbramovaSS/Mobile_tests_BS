@@ -2,15 +2,14 @@ package config;
 
 import org.aeonbits.owner.Config;
 
-@Config.Sources({
-        "classpath:remote.properties"
-})
-public interface BrowserStackConfig extends Config {
+@Config.Sources({"classpath:browserstack.properties"})
+
+public interface BrowserstackConfig extends Config {
     @Key("username")
     String getUsername();
 
-    @Key("password")
-    String getPassword();
+    @Key("key")
+    String getKey();
 
     @Key("remoteUrl")
     @DefaultValue("https://hub.browserstack.com/wd/hub")

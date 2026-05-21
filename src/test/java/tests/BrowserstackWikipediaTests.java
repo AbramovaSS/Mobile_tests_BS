@@ -53,7 +53,7 @@ public class BrowserstackWikipediaTests extends TestBase {
     void successfulGoToResultScreen() {
         searchScreenPage.skipStartScreen()
                 .searchInput()
-                .setKeyInput("Appium")
+                .setKeyInput(SEARCH_QUERY)
                 .tapFirstSearchResult();
         mainScreenPage.tapOkAlert();
         searchScreenPage.verifyTitleSearchResult();

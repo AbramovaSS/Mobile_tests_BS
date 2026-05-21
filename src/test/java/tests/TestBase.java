@@ -3,7 +3,7 @@ package tests;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.logevents.SelenideLogger;
-import drivers.BrowserStackDriver;
+import drivers.BrowserstackDriver;
 import drivers.LocalDriver;
 import helpers.Attach;
 import io.qameta.allure.selenide.AllureSelenide;
@@ -28,7 +28,7 @@ public class TestBase {
 
         switch (host) {
             case "browserstack":
-                Configuration.browser = BrowserStackDriver.class.getName();
+                Configuration.browser = BrowserstackDriver.class.getName();
                 System.out.println("Running on BrowserStack");
                 break;
             case "local":

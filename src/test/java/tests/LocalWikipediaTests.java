@@ -22,7 +22,7 @@ public class LocalWikipediaTests extends TestBase {
     void successfulSearch() {
         searchScreenPage.skipStartScreen()
                 .searchInput()
-                .setKeyInput("Appium")
+                .setKeyInput(SEARCH_QUERY)
                 .verifySearchResultsAreDisplayed();
     }
 
@@ -53,7 +53,7 @@ public class LocalWikipediaTests extends TestBase {
     void successfulGoToResultScreen() {
         searchScreenPage.skipStartScreen()
                 .searchInput()
-                .setKeyInput("Appium")
+                .setKeyInput(SEARCH_QUERY)
                 .tapFirstSearchResult();
         mainScreenPage.tapOkAlert();
         searchScreenPage.verifyTitleSearchResult();

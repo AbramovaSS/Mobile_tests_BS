@@ -56,12 +56,18 @@ tasks.withType(Test) {
 
 tasks.register('browserstack_test', Test) {
     useJUnitPlatform {
-        includeTags('browserstack')
+        testClassesDirs = sourceSets.test.output.classesDirs
+        classpath = sourceSets.test.runtimeClasspath
+        systemProperty "tag", "browserstack"
+        includeTags("browserstack")
     }
 }
 
 tasks.register('local_test', Test) {
     useJUnitPlatform {
-        includeTags('local')
+        testClassesDirs = sourceSets.test.output.classesDirs
+        classpath = sourceSets.test.runtimeClasspath
+        systemProperty "tag", "local"
+        includeTags("local")
     }
 }
