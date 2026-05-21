@@ -16,34 +16,21 @@ import static com.codeborne.selenide.Selenide.open;
 
 public class TestBase {
 
-    public static String host = System.getProperty("host");
+    public static String tag = System.getProperty("tag");
+
     @BeforeAll
     static void beforeAll() {
-        if (host == null) {
-            throw new IllegalStateException(
-                    "System property 'host' is not set. " +
-                            "Please run tests with: -Dhost=browserstack or -Dhost=local"
-            );
-        }
-
-        switch (host) {
+        switch (tag) {
             case "browserstack":
                 Configuration.browser = BrowserstackDriver.class.getName();
-                System.out.println("Running on BrowserStack");
                 break;
             case "local":
                 Configuration.browser = LocalDriver.class.getName();
-                System.out.println("Running on Local");
                 break;
-            default:
-                throw new IllegalStateException(
-                        "Unknown host: '" + host + "'. Use -Dhost=browserstack or -Dhost=local"
-                );
         }
-
         Configuration.browserSize = null;
+        Configuration.timeout = 30000;
     }
-
 
     @BeforeEach
     void beforeEach() {
@@ -53,7 +40,7 @@ public class TestBase {
 
     @AfterEach
     void tearDown() {
-        switch (host) {
+        switch (tag) {
             case "browserstack":
                 String sessionId = Selenide.sessionId().toString();
 
