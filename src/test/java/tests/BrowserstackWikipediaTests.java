@@ -3,24 +3,24 @@ package tests;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import pages.MainScreen;
-import pages.SearchScreen;
-import pages.SettingsScreen;
+import screens.MainScreenPage;
+import screens.SearchScreenPage;
+import screens.SettingsScreenPage;
 
 import static data.TestData.SEARCH_QUERY;
 
 
 public class BrowserstackWikipediaTests extends TestBase {
 
-    SearchScreen searchScreen = new SearchScreen();
-    SettingsScreen settingsScreen = new SettingsScreen();
-    MainScreen mainScreen = new MainScreen();
+    SearchScreenPage searchScreenPage = new SearchScreenPage();
+    SettingsScreenPage settingsScreenPage = new SettingsScreenPage();
+    MainScreenPage mainScreenPage = new MainScreenPage();
 
     @Tag("browserstack")
     @DisplayName("Поиск по валидному запросу и отображение списка результатов")
     @Test
     void successfulSearch() {
-        searchScreen.skipStartScreen()
+        searchScreenPage.skipStartScreen()
                 .searchInput()
                 .setKeyInput("Appium")
                 .verifySearchResultsAreDisplayed();
@@ -30,7 +30,7 @@ public class BrowserstackWikipediaTests extends TestBase {
     @DisplayName("Удаление запроса в строке поиска")
     @Test
     void deletingQuerySearch() {
-        searchScreen.skipStartScreen()
+        searchScreenPage.skipStartScreen()
                 .searchInput()
                 .setKeyInput(SEARCH_QUERY)
                 .tapSearchCloseBtn()
@@ -41,9 +41,9 @@ public class BrowserstackWikipediaTests extends TestBase {
     @DisplayName("Переход в настройки Wiki")
     @Test
     void goToSettingsScreen() {
-        mainScreen.tapOkAlert()
+        mainScreenPage.tapOkAlert()
                 .tapNavMenuBtn();
-        settingsScreen.tapSettings()
+        settingsScreenPage.tapSettings()
                 .checkScreenSetting();
     }
 
@@ -51,11 +51,11 @@ public class BrowserstackWikipediaTests extends TestBase {
     @DisplayName("Переход на экран результата")
     @Test
     void successfulGoToResultScreen() {
-        searchScreen.skipStartScreen()
+        searchScreenPage.skipStartScreen()
                 .searchInput()
-                .setKeyInput(SEARCH_QUERY)
+                .setKeyInput("Appium")
                 .tapFirstSearchResult();
-        mainScreen.tapOkAlert();
-        searchScreen.verifyTitleSearchResult();
+        mainScreenPage.tapOkAlert();
+        searchScreenPage.verifyTitleSearchResult();
     }
 }
