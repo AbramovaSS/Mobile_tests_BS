@@ -14,7 +14,7 @@ import static data.TestData.SEARCH_QUERY;
 import static io.appium.java_client.AppiumBy.accessibilityId;
 import static io.appium.java_client.AppiumBy.id;
 
-public class SearchScreenPage {
+public class SearchScreen {
     private final SelenideElement searchInput = $(accessibilityId("Search Wikipedia")),
             keyInput = $(id("org.wikipedia.alpha:id/search_src_text")),
             searchResultTitle = $(byXpath("(//android.widget.TextView[@text=\"Appium\"])[1]")),
@@ -25,19 +25,19 @@ public class SearchScreenPage {
             firstSearchResult = $$(byClassName("android.view.View"));
 
     @Step("Скрыть стартовый экран")
-    public SearchScreenPage skipStartScreen() {
+    public SearchScreen skipStartScreen() {
         back();
         return this;
     }
 
     @Step("Нажать на строку поиска")
-    public SearchScreenPage searchInput() {
+    public SearchScreen searchInput() {
         searchInput.click();
         return this;
     }
 
     @Step("Ввести в строку поиска \"{value}\"")
-    public SearchScreenPage setKeyInput(String value) {
+    public SearchScreen setKeyInput(String value) {
         keyInput.sendKeys(value);
         return this;
     }
@@ -49,25 +49,25 @@ public class SearchScreenPage {
     }
 
     @Step("Нажать на первый результат поиска в списке")
-    public SearchScreenPage tapFirstSearchResult() {
+    public SearchScreen tapFirstSearchResult() {
         firstSearchResult.first().click();
         return this;
     }
 
     @Step("Проверить, что заголовок экрана соотвествует поисковому результату")
-    public SearchScreenPage verifyTitleSearchResult() {
+    public SearchScreen verifyTitleSearchResult() {
         searchResultTitle.shouldHave(text(SEARCH_QUERY));
         return this;
     }
 
     @Step("Нажать на крестик в строке поиска")
-    public SearchScreenPage tapSearchCloseBtn() {
+    public SearchScreen tapSearchCloseBtn() {
         searchCloseBtn.click();
         return this;
     }
 
     @Step("Проверить, что в строке поиска отображается плейсхолдер")
-    public SearchScreenPage verifySearchSrcText() {
+    public SearchScreen verifySearchSrcText() {
         searchSrcText.shouldHave(text(PLACEHOLDER));
         return this;
     }
