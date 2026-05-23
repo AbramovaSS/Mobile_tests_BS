@@ -3,9 +3,10 @@ package tests;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import pages.MainScreen;
-import pages.SearchScreen;
-import pages.SettingsScreen;
+import screens.MainScreen;
+import screens.SearchScreen;
+import screens.SettingsScreen;
+
 
 import static data.TestData.SEARCH_QUERY;
 
