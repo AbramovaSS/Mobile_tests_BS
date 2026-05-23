@@ -12,9 +12,9 @@ import static data.TestData.SEARCH_QUERY;
 
 public class BrowserstackWikipediaTests extends TestBase {
 
-    SearchScreenPage searchScreenPage = new SearchScreenPage();
-    SettingsScreenPage settingsScreenPage = new SettingsScreenPage();
-    MainScreenPage mainScreenPage = new MainScreenPage();
+    SearchScreen searchScreenPage = new SearchScreen();
+    SettingsScreen settingsScreenPage = new SettingsScreen();
+    MainScreen mainScreenPage = new MainScreen();
 
     @Tag("browserstack")
     @DisplayName("Поиск по валидному запросу и отображение списка результатов")
